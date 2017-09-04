@@ -20,9 +20,19 @@
   We can turn the type list into a luple, so that means we can type cast our data to luple. 
   Check the [blog post][b] for more details about the technique and some online examples.
 
+  See it in action [online at tio.run][d].
+
 # The Great Type Loophole
 
+  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
+  with it. While researching the thing I uncovered a Great Type Loophole. Read more in the
+  [blog post][e].
+
+
   [l]: http://alexpolt.github.io/struct-layout.html "Visual C++ Struct Layout Reminder"
-  [b]: http://alexpolt.github.io/struct-tuple.html
+  [b]: http://alexpolt.github.io/struct-tuple.html "Structure Data Members as a Type List Using Pure C++ (C++14)"
+  [e]: http://alexpolt.github.io/type-loophole.html "The Great Type Loophole (C++14)"
   [c]: https://goo.gl/bWwE9B "Luple Online Example"
+  [d]: https://goo.gl/cwCe7A "Struct Reader Online Example"
+
 

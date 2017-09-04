@@ -1,6 +1,6 @@
 /*
 
-Luple: a Lightweight Tuple
+Luple: a Lightweight Tuple (C++14)
 
 Author: Alexandr Poltavsky, http://alexpolt.github.io
 
@@ -24,6 +24,8 @@ Dependencies:
   type_traits: std::conditional_t, std::is_same, std::enable_if
 
 Usage:
+
+  #include "luple.h"
 
   Construction:
 
@@ -55,6 +57,8 @@ Usage:
     const int int_index = luple_ns::tlist_get_n< my_luple_t::type_list, int >::value;
     const int int_index = index<int>( l2 );
     static_assert( int_index != -1 , "not found" );
+
+    luple_do( l2, []( auto& value ) { std::cout << value << ", "; } );
 
 */
 
@@ -151,9 +155,32 @@ namespace luple_ns {
   template<typename T> constexpr auto size ( tuple<T> const& t ) { return T::size; }
   template<typename U, typename T> constexpr auto index ( tuple<T> const& t ) { return tlist_get_n< T, U >::value; }
 
+  //helper to make luple<A, B, C> and luple< type_list<A, B, C> > equivalent
+  template<typename T> struct luple_impl {
+    using type = tuple<T>;
+  };
+
+  template<typename... TT> struct luple_impl< type_list< type_list<TT...> > > {
+    using type = typename luple_impl< type_list<TT...> >::type;
+  };
+
   //template alias to wrap types into type_list
   template<typename... TT>
-  using luple = tuple< type_list<TT...> >;
+  using luple = typename luple_impl< type_list<TT...> >::type;
+
+  //helper to run code for every member of luple
+  template<int... N, typename T0, typename T1>
+  void luple_do_impl (std::integer_sequence<int, N...>, T0& t, T1 fn) {
+    char dummy[]{ (fn( get<N>(t) ), char{})... };
+    (void)dummy;
+  }
+
+  //helper to run code for every member of tuple
+  template<typename T0, typename T1>
+  void luple_do (T0& t, T1 fn) {
+    luple_do_impl( std::make_integer_sequence< int, T0::type_list::size >{}, t, fn );
+  }
+  
 }
 
 //import into global namespace

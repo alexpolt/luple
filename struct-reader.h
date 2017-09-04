@@ -1,6 +1,6 @@
 /*
 
-Luple: a Lightweight Tuple (C++14)
+Struct Reader (C++14)
 
 Author: Alexandr Poltavsky, http://alexpolt.github.io
 
@@ -17,7 +17,7 @@ Description:
 
 Dependencies: 
 
-  luple (a lightweight tuple): luple_ns::type_list, luple_ns::tlist_get_n
+  luple.h (a lightweight tuple): luple_ns::type_list, luple_ns::tlist_get_n
   utility: std::integer_sequence
   type_traits: std::conditional_t, std::remove_pointer_t, std::remove_const_t, std::is_pointer,
               std::is_const, std::add_const_t, std::add_pointer_t
@@ -35,6 +35,7 @@ Usage:
   };
 
   using data_tlist = struct_reader::as_type_list< data >;
+
   using data_luple = luple< data_tlist >;
 
   data d{ 1, "test", 1.f };

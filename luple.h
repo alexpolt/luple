@@ -17,7 +17,7 @@ Description:
   used in constexpr functions. 
   
   Initially it was created as part of a structure data member types reading experiment.
-  Check the struct_reader.h file for more details.
+  Check the struct-reader.h file for more details.
 
 Dependencies: 
   utility: std::integer_sequence, std::forward, std::move

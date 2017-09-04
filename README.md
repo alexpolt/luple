@@ -8,7 +8,7 @@
   Luple is a tuple-like data structure. Its primary advantage is that it's very thin and
   also non-recursive (uses multiple inheritance). std::tuple is usually implemented as a single
   inheritance hierarchy and as a result its layout can vary between compilers (see [this post][l]).
-  Also it stores data in reverse order Luple is built on multiple inheritance and its layout is 
+  Also it stores data in reverse order. Luple is built on multiple inheritance and its layout is 
   consistent among compilers. It has the same layout as a non-virtual flat data structure with 
   the same data members (formally luple is not a POD and we should keep that in mind when we
   reinterpret\_cast it). Luple can be used in constexpr functions if its data members are of 

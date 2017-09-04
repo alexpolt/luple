@@ -71,7 +71,7 @@ namespace luple_ns {
   //type list
   template<typename... TT> struct type_list { static const int size = sizeof...(TT); };
 
-  //get element by index
+  //get element type by index
   template<typename T, int N, int M = 0> struct tlist_get;
 
   template<int N, int M, typename T, typename... TT> struct tlist_get< type_list<T, TT...>, N, M > {

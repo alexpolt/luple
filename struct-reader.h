@@ -85,7 +85,7 @@ namespace struct_reader {
 
   //here we're using overload resolution to get a data member type
   template<typename T, int... N>
-  constexpr auto get_type_id(std::size_t n) {
+  constexpr auto get_type_id(int n) {
     read_type_t tid[sizeof...(N)]{};
     T d = T{ tid[N]... }; (void)d;
     return tid[n].data;

@@ -8,9 +8,10 @@ License: Public-domain software
 
 Description: 
 
-  Reads the types of data members of a struct and returns a type list. 
-  Limited to literal/non-const/non-literal/non-array types (arrays are 
-  unfold into separate members). 
+  Reads the types of data members of a struct and returns a type list. A dozen lines of code.
+  Limited to literal/non-const/non-literal/non-array types (arrays are unfold into separate members).
+  All built-in C++ scalar types (bool, int, float, etc.), pointers to them (including to const 
+  variants) are supported. To support your custom type add it to type_list_t in the header.
   
   Read more in a blog post: http://alexpolt.github.io/struct-tuple.html
 
@@ -29,6 +30,8 @@ Usage:
     int a;
     char const* b;
     float c;
+    //my_class d; 
+    //for my_class to be recognized you need to add it to type_list_t type
   };
 
   using data_tlist = struct_reader::as_type_list< data >;

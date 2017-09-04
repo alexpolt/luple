@@ -13,7 +13,7 @@
   Still, luple is not a POD, so you're on your own if you reinterpret\_cast it. Luple can be used 
   in constexpr functions if its data members are of literal type.
 
-  See it in action [online at tio.run][c].
+  See it in action [online at tio.run][c] (or at [Ideone][c]).
 
 
 ## Struct Reader (C++14)
@@ -48,6 +48,7 @@
   [b]: http://alexpolt.github.io/struct-tuple.html "Structure Data Members as a Type List Using Pure C++ (C++14)"
   [e]: http://alexpolt.github.io/type-loophole.html "The Great Type Loophole (C++14)"
   [c]: https://goo.gl/ojAhbb "Luple Online Example"
+  [d]: https://ideone.com/nK9ttI "Luple Online Example"
   [luple.h]: https://github.com/alexpolt/luple/blob/master/luple.h
   [struct-reader.h]: https://github.com/alexpolt/luple/blob/master/struct-reader.h
 

@@ -1,7 +1,7 @@
 
 **This repository is home to three separate but related projects.**
 
-# Luple: A Lightweight Tuple (C++14)
+## Luple: A Lightweight Tuple (C++14)
 
   Header file: [luple.h][]
 
@@ -15,7 +15,7 @@
 
   See it in action [online at tio.run][c].
   
-# Struct Reader (C++14)
+## Struct Reader (C++14)
 
   Header file: [struct-reader.h][]
 
@@ -24,13 +24,22 @@
   We can turn the type list into a luple, so that means we can type cast our data to luple. 
   Check the [blog post][b] for more details about the technique and some online examples.
 
-# The Great Type Loophole
+## The Great Type Loophole
 
   Header file: [type-loophole.h][]
 
   Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
   with it. While researching the thing I uncovered a Great Type Loophole. Read more in the
   [blog post][e].
+
+
+---
+
+## License
+
+  The code in this repository is Public-domain software.
+
+  ![Pubic domain software](http://alexpolt.github.io/images/public_domain_mark.png)
 
 
   [l]: http://alexpolt.github.io/struct-layout.html "Visual C++ Struct Layout Reminder"

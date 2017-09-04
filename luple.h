@@ -50,13 +50,14 @@ Usage:
     auto& str = get<std::string>( l2 );
 
     auto sz = size( l2 );
-    auto sz = my_luple_t::type_list::size;
 
-    using element0_t = luple_ns::tlist_get_t< my_luple_t::type_list, 0 >;
+    const int int_index = index<std::string>( l2 );
 
-    const int int_index = luple_ns::tlist_get_n< my_luple_t::type_list, int >::value;
-    const int int_index = index<int>( l2 );
     static_assert( int_index != -1 , "not found" );
+
+    using element1_t = luple_ns::element_t< my_luple_t, 1 >;
+
+    element1_t str2{ "hello" };
 
     luple_do( l2, []( auto& value ) { std::cout << value << ", "; } );
 
@@ -154,6 +155,10 @@ namespace luple_ns {
 
   template<typename T> constexpr auto size ( tuple<T> const& t ) { return T::size; }
   template<typename U, typename T> constexpr auto index ( tuple<T> const& t ) { return tlist_get_n< T, U >::value; }
+
+  //type for index
+  template<typename T, int N>
+  using element_t = tlist_get_t< typename T::type_list, N >;
 
   //helper to make luple<A, B, C> and luple< type_list<A, B, C> > equivalent
   template<typename T> struct luple_impl {

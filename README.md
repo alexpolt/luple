@@ -36,7 +36,7 @@
   [l]: http://alexpolt.github.io/struct-layout.html "Visual C++ Struct Layout Reminder"
   [b]: http://alexpolt.github.io/struct-tuple.html "Structure Data Members as a Type List Using Pure C++ (C++14)"
   [e]: http://alexpolt.github.io/type-loophole.html "The Great Type Loophole (C++14)"
-  [c]: https://goo.gl/oaC6k5 "Luple Online Example"
+  [c]: https://goo.gl/aE4B3N "Luple Online Example"
   [luple.h]: https://github.com/alexpolt/luple/blob/master/luple.h
   [struct-reader.h]: https://github.com/alexpolt/luple/blob/master/struct-reader.h
 

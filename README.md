@@ -1,6 +1,16 @@
 
 **This repository is home to three separate but related projects.**
 
+
+## The Great Type Loophole (C++14)
+
+  Header file: [type-loophole.h][]
+
+  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
+  with it, you need to add types to a list before using them. While researching the thing I 
+  uncovered a **Great Type Loophole**. Read more in the [blog post][e] with online examples.
+
+
 ## Luple: A Lightweight Tuple (C++14)
 
   Header file: [luple.h][]
@@ -15,15 +25,6 @@
   literal type. Check the header for API description.
 
   See it in action [online at tio.run][c] (or at [Ideone][c]).
-
-
-## The Great Type Loophole
-
-  Header file: [type-loophole.h][]
-
-  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
-  with it, you need to add types to a list before using them. While researching the thing I 
-  uncovered a **Great Type Loophole**. Read more in the [blog post][e] with online examples.
 
 
 ## Struct Reader (C++14)

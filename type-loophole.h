@@ -52,7 +52,8 @@ Usage:
 
     for (auto i : get<2>(l)) printf("%d, ",i);
 
-  For more check it online (tio.run) or (coliru) or (rextester)
+  You can find links to online working examples in the blog post
+  http://alexpolt.github.io/type-loophole.html
 
 */
 

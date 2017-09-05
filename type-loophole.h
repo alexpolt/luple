@@ -87,7 +87,7 @@ namespace loophole_ns {
   };
 
   /*
-    It is here to avoid multiple definition errors
+    This specialization is to avoid multiple definition errors.
   */
   template<typename T, typename U, int N>
   struct fn_def<T, U, N, true> {};

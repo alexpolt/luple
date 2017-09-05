@@ -17,6 +17,15 @@
   See it in action [online at tio.run][c] (or at [Ideone][c]).
 
 
+## The Great Type Loophole
+
+  Header file: [type-loophole.h][]
+
+  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
+  with it, you need to add types to a list before using them. While researching the thing I 
+  uncovered a **Great Type Loophole**. Read more in the [blog post][e] with online examples.
+
+
 ## Struct Reader (C++14)
 
   Header file: [struct-reader.h][]
@@ -27,15 +36,7 @@
   Check the [blog post][b] for more details about the technique and online examples.
   The API description is in the header.
 
-<!--
-## The Great Type Loophole
-
-  Header file: [type-loophole.h][]
-
-  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
-  with it. While researching the thing I uncovered a Great Type Loophole. Read more in the
-  [blog post][e].
--->
+  After discovery of the Great Type Loophole there is not much value to Struct Reader, I guess.
 
 ---
 
@@ -53,5 +54,7 @@
   [d]: https://ideone.com/nK9ttI "Luple Online Example"
   [luple.h]: https://github.com/alexpolt/luple/blob/master/luple.h
   [struct-reader.h]: https://github.com/alexpolt/luple/blob/master/struct-reader.h
+  [type-loophole.h]: https://github.com/alexpolt/luple/blob/master/type-loophole.h
+
 
 

@@ -15,6 +15,9 @@ Description:
   
   Read more in a blog post: http://alexpolt.github.io/struct-tuple.html
 
+  UPD. Later I've come up with an even more sophisticated hack called The Great Type Loophole.
+  check the blog post http://alexpolt.github.io/type-loophole.html
+
 Dependencies: 
 
   luple.h (a lightweight tuple): luple_ns::type_list, luple_ns::tlist_get_n
@@ -110,7 +113,7 @@ namespace struct_reader {
 
   //get fields number using expression SFINAE
   template<typename T, int... N>
-  constexpr auto fields_number(...) { return sizeof...(N)-1; }
+  constexpr int fields_number(...) { return sizeof...(N)-1; }
 
   template<typename T, int... N>
   constexpr auto fields_number(int) -> decltype(T{ (N,read_type_t{})... }, sizeof(0)) { return fields_number<T, N..., 0>(0); }

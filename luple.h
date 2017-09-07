@@ -72,6 +72,7 @@ namespace luple_ns {
   //type list
   template<typename... TT> struct type_list { static const int size = sizeof...(TT); };
 
+
   //get element type by index
   template<typename T, int N, int M = 0> struct tlist_get;
 
@@ -80,9 +81,10 @@ namespace luple_ns {
     using type = std::conditional_t< N == M, T, typename tlist_get< type_list<TT...>, N, M + 1 >::type >;
   };
 
-  template<int N, int M> struct tlist_get< type_list<>, N, M > {
-    using type = void;
-  };
+  template<int N, int M> struct tlist_get< type_list<>, N, M > { using type = void; };
+
+  template<int N> struct tlist_get< type_list<>, N, 0 > {};
+
 
   template<typename T, int N>
   using tlist_get_t = typename tlist_get<T, N>::type;
@@ -97,10 +99,12 @@ namespace luple_ns {
     static const int value = -1;
   };
 
+
   //a building block that is used in multiple inheritane
   template<typename T, int N> struct tuple_element {
     tlist_get_t<T, N> value;
   };
+
 
   //base of luple and also parent of tuple_element's
   template<typename T, typename U> struct tuple_base;
@@ -116,6 +120,7 @@ namespace luple_ns {
     constexpr tuple_base ( TT&&... args ) : tuple_element< tlist, NN >{ std::move(args) }... {}
     constexpr tuple_base () {}
   };
+
 
   //tuple=luple
   //T: type_list< ... user types ... >

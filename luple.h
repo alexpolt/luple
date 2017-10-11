@@ -1,6 +1,6 @@
 /*
 
-Luple: a Lightweight Tuple (C++14)
+luple: a Lightweight Tuple (C++14)
 
 Author: Alexandr Poltavsky, http://alexpolt.github.io
 
@@ -20,6 +20,7 @@ Description:
   Check the struct-reader.h file for more details.
 
 Dependencies: 
+
   utility: std::integer_sequence, std::forward, std::move
   type_traits: std::conditional_t, std::is_same, std::enable_if
 
@@ -116,8 +117,12 @@ namespace luple_ns {
 
     template<typename... UU, typename U = std::enable_if_t< sizeof...(UU) == sizeof...(NN) >>
     constexpr tuple_base ( UU&&... args ) : tuple_element< tlist, NN >{ std::forward<UU>(args) }... {}
-    constexpr tuple_base ( TT const&... args ) : tuple_element< tlist, NN >{ args }... {}
-    constexpr tuple_base ( TT&&... args ) : tuple_element< tlist, NN >{ std::move(args) }... {}
+
+    template<typename... UU, typename = std::enable_if_t< sizeof...(UU) != sizeof...(NN) >>
+    constexpr tuple_base ( UU const&... ) {
+      static_assert( sizeof...(UU) == sizeof...(NN), "wrong number of arguments" );
+    }
+
     constexpr tuple_base () {}
   };
 

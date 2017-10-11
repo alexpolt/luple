@@ -1,8 +1,8 @@
 
-**This repository is home to three separate but related projects.**
+**This repository is home to separate but related projects.**
 
 
-## The Great Type Loophole (C++14)
+## The C++ Type Loophole (C++14)
 
   Header file: [type-loophole.h][]
 
@@ -11,7 +11,7 @@
   uncovered a **Great Type Loophole**. Read more in the [blog post][e] with online examples.
 
 
-## Luple: A Lightweight Tuple (C++14)
+## luple: A Lightweight Tuple (C++14)
 
   Header file: [luple.h][]
 
@@ -24,7 +24,25 @@
   reinterpret\_cast it). Luple can be used in constexpr functions if its data members are of 
   literal type. Check the header for API description.
 
-  See it in action [online at tio.run][c] (or at [Ideone][c]).
+  See it in action [online at tio.run][c] (or at [Ideone][d]).
+
+## nuple: a Named Tuple
+
+  Header file: [nuple.h][]
+
+  nuple extends luple and allows giving names to data members. It works by using C++ string
+  interning (intern.h) which allows for a neat syntax. Check this [blog post][n].
+
+  Online example is [here][n-tio] (or at [Ideone][n-ide]).
+
+# C++ String Interning
+
+  Header file: [intern.h][]
+
+  By turning a string literal into a type we can create an interned string in C++. This has
+  a number of useful properties, nuple is one of them. Read more [here][i].
+
+  Also you can check an online example [here][i-tio] (or at [Ideone][i-ide]).
 
 
 ## Struct Reader (C++14)
@@ -51,9 +69,21 @@
   [l]: http://alexpolt.github.io/struct-layout.html "Visual C++ Struct Layout Reminder"
   [b]: http://alexpolt.github.io/struct-tuple.html "Structure Data Members as a Type List Using Pure C++ (C++14)"
   [e]: http://alexpolt.github.io/type-loophole.html "The Great Type Loophole (C++14)"
-  [c]: https://goo.gl/ojAhbb "Luple Online Example"
-  [d]: https://ideone.com/nK9ttI "Luple Online Example"
+  [n]: http://alexpolt.github.io/named-tuple.html "nuple: a Named Tuple"
+  [i]: http://alexpolt.github.io/intern.html "Useful Properties of String Interning in C++"
+
+  [c]: https://goo.gl/ojAhbb "luple Online Example"
+  [d]: https://ideone.com/nK9ttI "luple Online Example"
+  [n-tio]: https://goo.gl/EMWgBG "nuple Online Example"
+  [n-ide]: https://ideone.com/uvZ3uZ "nuple Online Example"
+  [i-tio]: https://goo.gl/LfDTZ3 "C++ String Interning Online Example"
+  [i-ide]: https://ideone.com/Dh6az7 "C++ String Interning Online Example"
+
+
   [luple.h]: https://github.com/alexpolt/luple/blob/master/luple.h
+  [nuple.h]: https://github.com/alexpolt/luple/blob/master/nuple.h
+  [intern.h]: https://github.com/alexpolt/luple/blob/master/intern.h
+
   [struct-reader.h]: https://github.com/alexpolt/luple/blob/master/struct-reader.h
   [type-loophole.h]: https://github.com/alexpolt/luple/blob/master/type-loophole.h
 

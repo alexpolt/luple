@@ -8,7 +8,7 @@
 
   Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
   with it, you need to add types to a list before using them. While researching the thing I 
-  uncovered a **Great Type Loophole**. Read more in the [blog post][e] with online examples.
+  uncovered a **C++ Type Loophole**. Read more in the [blog post][e] with online examples.
 
 
 ## luple: A Lightweight Tuple (C++14)
@@ -33,16 +33,16 @@
   nuple extends luple and allows giving names to data members. It works by using C++ string
   interning (intern.h) which allows for a neat syntax. Check this [blog post][n].
 
-  Online example is [here][n-tio] (or at [Ideone][n-ide]).
+  Online example is [here at tio.run][n-tio] (or at [Ideone][n-ide]).
 
-# C++ String Interning
+## C++ String Interning
 
   Header file: [intern.h][]
 
   By turning a string literal into a type we can create an interned string in C++. This has
   a number of useful properties, nuple is one of them. Read more [here][i].
 
-  Also you can check an online example [here][i-tio] (or at [Ideone][i-ide]).
+  Also you can check an online example [here at tio.run][i-tio] (or at [Ideone][i-ide]).
 
 
 ## Struct Reader (C++14)

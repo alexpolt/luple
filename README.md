@@ -1,6 +1,6 @@
 
 This repository is home to separate but related projects: 
-The C++ Type Loophole (C++14), luple, nuple, C++ String Interning, Struct Reader.
+C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
 
 
 ## The C++ Type Loophole (C++14)

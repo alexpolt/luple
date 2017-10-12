@@ -12,10 +12,13 @@ Description:
   
   Read more in the blog post http://alexpolt.github.io/intern.html
 
+  The macro $(...) has a limit of 10 characters. Edit it for longer strings.
+
   Would've been easier if MSVC implemented the proposal N3599 by Richard Smith
   "Literal operator templates for strings". 
   
   GCC and Clang implement it as an extension. This allows strings of any length. 
+
   To use this extension: #define N3599
 
 Dependencies: 

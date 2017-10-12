@@ -43,6 +43,11 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   By turning a string literal into a type we can create an interned string in C++. This has
   a number of useful properties, nuple is one of them. Read more [here][i].
 
+  There is a limit on string length of 10 characters (sort of arbitrary), you can increase it by 
+  editing the $(...) macro in the intern.h header. Or #define N3599 to use [N3599][]
+  proposal (adds string literal template to the language) which GCC and Clang implement as an 
+  extension, hopefully MSVC will support it too.
+
   Also you can check an online example [here at tio.run][i-tio] (or at [Ideone][i-ide]).
 
 
@@ -88,5 +93,6 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   [struct-reader.h]: https://github.com/alexpolt/luple/blob/master/struct-reader.h
   [type-loophole.h]: https://github.com/alexpolt/luple/blob/master/type-loophole.h
 
+  [N3599]: http://open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3599.html "Literal operator templates for strings"
 
 

@@ -13,7 +13,10 @@ Description:
   Read more in the blog post http://alexpolt.github.io/intern.html
 
   Would've been easier if MSVC implemented the proposal N3599 by Richard Smith
-  "Literal operator templates for strings" (GCC and Clang implement it as an extension).
+  "Literal operator templates for strings". 
+  
+  GCC and Clang implement it as an extension. This allows strings of any length. 
+  To use this extension: #define N3599
 
 Dependencies: 
 
@@ -53,7 +56,7 @@ namespace intern {
 
     static constexpr char const value[ sizeof...(NN) ]{NN...};
 
-    static_assert( value[ sizeof...(NN) - 1 ] == '\0', "interned string was too long" );
+    static_assert( value[ sizeof...(NN) - 1 ] == '\0', "interned string was too long, see $(...) macro" );
 
     static constexpr auto data() { return value; }
   };
@@ -73,10 +76,27 @@ namespace intern {
 
 }
 
-//prefixing macros with a $ helps with readability
-#define $c(a,b) intern::ch(a, b)
+//define N3599 on GCC or Clang to use an extension (no limit on strings and no excessive chars)
 
-//10 characters + '\0', add $c(...) for bigger strings
-#define $(s) intern::string<$c(s,0),$c(s,1),$c(s,2),$c(s,3),$c(s,4),$c(s,5),$c(s,6),$c(s,7),$c(s,8),$c(s,9),$c(s,10)>
+#if !defined( _MSC_VER ) && defined( N3599 )
+
+  template<typename T, T... C>
+  auto operator ""_intern() {
+    return intern::string<C..., T{}>{};
+  }
+
+  #define $join_( a, b ) a ## b
+  #define $join( a, b ) $join_( a, b )
+  #define $( s ) decltype( $join( s, _intern ) )
+
+#else
+
+  //prefixing macros with a $ helps with readability
+  #define $c( a, b ) intern::ch( a, b )
+
+  //10 characters + '\0', add $c(...) for bigger strings
+  #define $( s ) intern::string< $c(s,0),$c(s,1),$c(s,2),$c(s,3),$c(s,4),$c(s,5),$c(s,6),$c(s,7),$c(s,8),$c(s,9),$c(s,10) >
+
+#endif
 
 

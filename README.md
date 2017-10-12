@@ -1,5 +1,6 @@
 
-**This repository is home to separate but related projects.**
+This repository is home to separate but related projects: 
+The C++ Type Loophole (C++14), luple, nuple, C++ String Interning, Struct Reader.
 
 
 ## The C++ Type Loophole (C++14)
@@ -11,7 +12,7 @@
   uncovered a **C++ Type Loophole**. Read more in the [blog post][e] with online examples.
 
 
-## luple: A Lightweight Tuple (C++14)
+## luple: A Lightweight (in terms of source code) Tuple (C++14)
 
   Header file: [luple.h][]
 
@@ -26,7 +27,7 @@
 
   See it in action [online at tio.run][c] (or at [Ideone][d]).
 
-## nuple: a Named Tuple
+## nuple: a Named Tuple (C++14)
 
   Header file: [nuple.h][]
 
@@ -35,7 +36,7 @@
 
   Online example is [here at tio.run][n-tio] (or at [Ideone][n-ide]).
 
-## C++ String Interning
+## C++ String Interning (C++14)
 
   Header file: [intern.h][]
 

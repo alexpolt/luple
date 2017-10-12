@@ -88,9 +88,7 @@ namespace intern {
     return intern::string<C..., T{}>{};
   }
 
-  #define $join_( a, b ) a ## b
-  #define $join( a, b ) $join_( a, b )
-  #define $( s ) decltype( $join( s, _intern ) )
+  #define $( s ) decltype( s ## _intern )
 
 #else
 

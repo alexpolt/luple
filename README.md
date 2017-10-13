@@ -30,6 +30,7 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   interning (intern.h) which allows for a neat syntax. Check this [blog post][n].
 
   See it in action [online at tio.run][n-tio] (also [Coliru][n-col] or [Wandbox][n-wan]).
+  
   Also a nuple-to-json [example at tio.run][j-tio] (also [Coliru][j-col] or [Wandbox][j-wan]).
 
   Read the header for API documentation.

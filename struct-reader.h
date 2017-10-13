@@ -20,7 +20,7 @@ Description:
 
 Dependencies: 
 
-  luple.h (a lightweight tuple): luple_ns::type_list, luple_ns::tlist_get_n
+  luple.h (a lightweight tuple): luple, luple_t, luple_ns::type_list, luple_ns::tlist_get_n
   utility: std::integer_sequence
   type_traits: std::conditional_t, std::remove_pointer_t, std::remove_const_t, std::is_pointer,
               std::is_const, std::add_const_t, std::add_pointer_t
@@ -33,25 +33,32 @@ Usage:
     int a;
     char const* b;
     float c;
-    //my_class d; 
-    //for my_class to be recognized you need to add it to type_list_t type
+    //my_class d; //for my_class to be recognized you need to add it to struct_reader::type_list_t
   };
 
-  using data_tlist = struct_reader::as_type_list< data >;
+  using data_tlist = struct_reader::as_type_list< data >; //returns luple_ns::type_list<...>
 
-  using data_luple = luple< data_tlist >;
+  //luple_t<...> - takes luple_ns::type_list< list of types >, luple<...> takes a list of types directly
+  //for more information refer to luple.h
+
+  using data_luple = luple_t< data_tlist >;
 
   data d{ 1, "test", 1.f };
 
-  auto& l = *reinterpret_cast<data_luple*>( &d );
+  auto& l = *reinterpret_cast< data_luple* >( &d );
 
-  //data_luple is not POD but its layout matches struct data on Clang, GCC and MSVC
+  //data_luple is not a POD but its layout matches struct data on Clang, GCC and MSVC
   //more details is in the blog post http://alexpolt.github.io/struct-layout.html
 
   get<2>(l) = 3.f;
+
   get<int>(l) = 10;
 
+  You can find links to online working examples in the blog post
+  http://alexpolt.github.io/struct-tuple.html
+
 */
+
 
 namespace struct_reader {
 

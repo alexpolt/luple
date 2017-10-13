@@ -21,7 +21,7 @@ Usage:
 
   #include "nuple.h"
 
-  using nameid_t = nuple<$("name"), char const*, $("id"), int>; //$(...) - check intern.h
+  using nameid_t = nuple< $("name"), char const*, $("id"), int >; //$(...) - see intern.h header
 
   nameid_t n[] = { {"alex", 1}, {"ivan", 2} };
 
@@ -29,19 +29,22 @@ Usage:
     printf( "name: %s, id: %d\n", get<$("name")>(v), get<$("id")>(v) );
 
 
-  auto get_person(int i) { return nameid_t{"john", i}; }
+  auto get_person ( int i ) { return nameid_t{ "john", i }; }
 
-  auto p = get_person(3);
+  auto p = get_person( 3 );
 
-  printf( "name: %s, id: %d\n", get<$("name")>(p), get<$("id")>(p) );
+  printf( "name: %s, id: %d\n", get<$("name")>( p ), get<$("id")>( p ) );
+
 
   //nuple extends luple, so luple methods work as usual (as in tuple)
 
-  printf( "luple size: %d\n", size(p) );
+  printf( "luple size: %d\n", size( p ) );
 
-  get<0>(p) = "irene"; //or get<$("name")>(p) = "irene";
+  get<0>( p ) = "irene"; //or get<$("name")>( p ) = "irene";
+  
+  get<int>( p ) = 4; //or get<$("id")>( p ) = 4;
 
-  get<int>(p) = 4; //or get<$("id")>(p) = 4;
+  bool is_equal = p == p;
 
   //see luple.h for more examples
 
@@ -85,10 +88,13 @@ namespace nuple_ns {
   //nuple is just a thin layer on top of luple
 
   template<typename... TT>
-  struct nuple : luple< typename filter<TT...>::tlist > {
+  struct nuple : luple_t< typename filter<TT...>::tlist > {
+
     using name_list = typename filter<TT...>::nlist;
-    using base = luple< typename filter<TT...>::tlist >;
+    using base = luple_t< typename filter<TT...>::tlist >;
+
     static_assert( name_list::size == base::type_list::size, "name and type list sizes don't match" );
+
     using base::base;
   };
 
@@ -96,17 +102,22 @@ namespace nuple_ns {
 
   template<typename T, typename = std::enable_if_t< intern::is_string<T>::value >, typename... TT> 
   constexpr auto& get ( nuple<TT...>& t ) {
-    static_assert( luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T>::value != -1, "no such field" );
+
+    static_assert( luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T>::value != -1, "no such nuple name" );
+
     return get< luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T >::value >( t ); 
   }
 
   template<typename T, typename = std::enable_if_t< intern::is_string<T>::value >, typename... TT> 
   constexpr auto& get ( nuple<TT...> const& t ) {
-    static_assert( luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T>::value != -1, "no such field" );
+
+    static_assert( luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T>::value != -1, "no such nuple name" );
+    
     return get< luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T >::value >( t ); 
   }
 
 }
+
 
 using nuple_ns::nuple;
 

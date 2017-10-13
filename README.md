@@ -3,14 +3,6 @@ This repository is home to separate but related projects:
 C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
 
 
-## The C++ Type Loophole (C++14)
-
-  Header file: [type-loophole.h][]
-
-  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
-  with it, you need to add types to a list before using them. While researching the thing I 
-  uncovered a **C++ Type Loophole**. Read more in the [blog post][e] with online examples.
-
 
 ## luple: A Lightweight (in terms of source code) Tuple (C++14)
 
@@ -25,7 +17,10 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   reinterpret\_cast it). Luple can be used in constexpr functions if its data members are of 
   literal type. Check the header for API description.
 
-  See it in action [online at tio.run][c] (or at [Ideone][d]).
+  See it in action [online at tio.run][l-tio] (also [Coliru][l-col] or [Wandbox][l-wan]).
+
+  Read the header for API documentation.
+
 
 ## nuple: a Named Tuple (C++14)
 
@@ -34,7 +29,10 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   nuple extends luple and allows giving names to data members. It works by using C++ string
   interning (intern.h) which allows for a neat syntax. Check this [blog post][n].
 
-  Online example is [here at tio.run][n-tio] (or at [Ideone][n-ide]).
+  See it in action [online at tio.run][n-tio] (also [Coliru][n-col] or [Wandbox][n-wan]).
+
+  Read the header for API documentation.
+
 
 ## C++ String Interning (C++14)
 
@@ -50,6 +48,8 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
 
   Also you can check an online example [here at tio.run][i-tio] (or at [Ideone][i-ide]).
 
+  Read the header for API documentation.
+
 
 ## Struct Reader (C++14)
 
@@ -62,6 +62,19 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   The API description is in the header.
 
   After discovery of the Great Type Loophole there is not much value to Struct Reader, I guess.
+
+  Read the header for API documentation.
+
+
+## The C++ Type Loophole (C++14)
+
+  Header file: [type-loophole.h][]
+
+  Struct Reader is very limited in what it can do. You can't use std::string or a virtual type
+  with it, you need to add types to a list before using them. While researching the thing I 
+  uncovered a **C++ Type Loophole**. Read more in the [blog post][e] with online examples.
+
+  Read the header for API documentation.
 
 ---
 
@@ -78,10 +91,14 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   [n]: http://alexpolt.github.io/named-tuple.html "nuple: a Named Tuple"
   [i]: http://alexpolt.github.io/intern.html "Useful Properties of String Interning in C++"
 
-  [c]: https://goo.gl/ojAhbb "luple Online Example"
-  [d]: https://ideone.com/nK9ttI "luple Online Example"
-  [n-tio]: https://goo.gl/EMWgBG "nuple Online Example"
-  [n-ide]: https://ideone.com/uvZ3uZ "nuple Online Example"
+  [l-tio]: https://goo.gl/isZtwj "luple Online Example at tio.run"
+  [l-col]: http://coliru.stacked-crooked.com/a/15a37a8385bcb3dc "luple Online Example at Coliru"
+  [l-wan]: https://wandbox.org/permlink/nm2pzbt1WqkfZ6k1 "luple Online Example at Wandbox"
+
+  [n-tio]: https://goo.gl/ocpLpG "luple Online Example at tio.run"
+  [n-col]: http://coliru.stacked-crooked.com/a/6c31a74287925b52 "luple Online Example at Coliru"
+  [n-wan]: https://wandbox.org/permlink/FA7LV8zjuyy9UIFH "luple Online Example at Wandbox"
+
   [i-tio]: https://goo.gl/LfDTZ3 "C++ String Interning Online Example"
   [i-ide]: https://ideone.com/Dh6az7 "C++ String Interning Online Example"
 

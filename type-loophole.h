@@ -22,35 +22,39 @@ Description:
 
 Dependencies: 
 
-  luple.h (a lightweight tuple): luple_ns::type_list (bare template with a parameter pack)
+  luple.h (a lightweight tuple): luple_t, luple_ns::type_list (bare template with a parameter pack)
   utility: std::integer_sequence
 
 Usage: 
 
-    #include "type-loophole.h"
+  #include "type-loophole.h"
 
-    struct test { 
+  struct test { 
+    test() {}
+  };
 
-      test() {}
-    };
+  struct data { 
+    test t0;  
+    std::string t1; 
+    std::vector<int> t2; 
+  };
 
-    struct data { 
-      test t0;  
-      std::string t1; 
-      std::vector<int> t2; 
-    };
+  using data_tlist = loophole_ns::as_type_list< data >; // type_list< test, std::string, std::vector >
 
-    using data_tlist = loophole_ns::as_type_list< data >; // type_list< test, std::string, std::vector >
-    using data_luple = luple< data_tlist >; //check luple.h for API
+  //luple_t<...> - takes luple_ns::type_list< list of types >, luple<...> takes a list of types directly
+  //for more information refer to luple.h
 
-    data d{ {}, "Hello World!", {1, 2 ,3} };
-    auto& l = reinterpret_cast< data_luple& >
+  using data_luple = luple_t< data_tlist >; //check luple.h for API
 
-    auto sz = size( data_luple );
-    
-    printf("%s\n", get<std::string>(l).data());
+  data d{ {}, "Hello World!", {1, 2 ,3} };
 
-    for (auto i : get<2>(l)) printf("%d, ",i);
+  auto& l = reinterpret_cast< data_luple& >
+
+  auto sz = size( data_luple );
+  
+  printf( "%s\n", get< std::string >( l ).data() );
+
+  for( auto i : get< 2 >( l ) ) printf( "%d, ",i );
 
   You can find links to online working examples in the blog post
   http://alexpolt.github.io/type-loophole.html

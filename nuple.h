@@ -116,6 +116,10 @@ namespace nuple_ns {
     return get< luple_ns::tlist_get_n< typename nuple<TT...>::name_list, T >::value >( t ); 
   }
 
+  //nuple member name (interned string) for index
+  template<typename T, int N>
+  using name_t = luple_ns::tlist_get_t< typename T::name_list, N >;
+
 }
 
 

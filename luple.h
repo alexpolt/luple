@@ -91,6 +91,15 @@ Usage:
     bool less = p[0] < p[1];
     bool equal = p[0] == p[1];
 
+  tie:
+
+    chat const* a;
+    int b;
+
+    luple_tie( a, b ) = p[0];
+
+    bool equal = luple_tie( a, b ) == luple_tie( a, b );
+
     //etc.
 
 */
@@ -132,6 +141,18 @@ namespace luple_ns {
   };
 
 
+  //forward declaration
+  template<typename T> struct tuple;
+
+  //for sfinae
+  template<typename T> struct is_tuple {
+    static const bool value = false;
+  };
+
+  template<typename T> struct is_tuple< tuple<T> > {
+    static const bool value = true;
+  };
+
   //a building block that is used in multiple inheritane
   template<typename T, int N> struct tuple_element {
     tlist_get_t<T, N> value;
@@ -146,15 +167,17 @@ namespace luple_ns {
 
     using tlist = type_list<TT...>;
 
-    template<typename... UU, typename U = std::enable_if_t< sizeof...(UU) == sizeof...(NN) >>
-    constexpr tuple_base ( UU&&... args ) : tuple_element< tlist, NN >{ std::forward<UU>(args) }... {}
+    template<typename... UU>
+    constexpr tuple_base ( UU&&... args ) : tuple_element< tlist, NN >{ std::forward<UU>( args ) }... {}
 
-    template<typename... UU, typename = std::enable_if_t< sizeof...(UU) != sizeof...(NN) >>
-    constexpr tuple_base ( UU const&... ) {
-      static_assert( sizeof...(UU) == sizeof...(NN), "wrong number of arguments" );
-    }
+    template<typename U>
+    constexpr tuple_base( tuple<U> const& o ) : tuple_element< tlist, NN >{ TT( o.template get<NN>() ) }... {}
+
+    template<typename U>
+    constexpr tuple_base( tuple<U> && o ) : tuple_element< tlist, NN >{ TT( std::move( o.template get<NN>() ) ) }... {}
 
     constexpr tuple_base () {}
+    
   };
 
 
@@ -167,27 +190,97 @@ namespace luple_ns {
 
     static const int size = T::size;
 
+    //constructing
+
+    template<typename... UU, typename U = std::enable_if_t< size && sizeof...(UU) == size >>
+    constexpr tuple ( UU&&... args ) : base{ std::forward<UU>( args )... } {}
+
+    template<typename... UU, typename = std::enable_if_t< sizeof...(UU) != size >>
+    constexpr tuple ( UU const&... ) {
+      static_assert( sizeof...(UU) == type_list::size, "wrong number of arguments" );
+    }
+
+    //converting construction
+
+    template<typename U, typename = std::enable_if_t< U::size == size >>
+    constexpr tuple( tuple<U> & o ) : tuple{ const_cast< tuple<U> const & >( o ) } {}
+
+    template<typename U, typename = std::enable_if_t< U::size == size >>
+    constexpr tuple( tuple<U> const & o ) : base{ o } {}
+
+    template<typename U, typename = std::enable_if_t< U::size == size >>
+    constexpr tuple( tuple<U>&& o ) : base{ std::move( o ) } {}
+
+    constexpr tuple () {}
+
+    //copying a different tuple
+    
+    template<typename U>
+    auto& operator= ( tuple<U> const& r ) { 
+
+      static_assert( size == U::size, "sizes of tuples do not match" );
+
+      return assign_( *this, r, std::make_integer_sequence< int, size >{} );
+    }
+
+    template<typename U, int... NN>
+    auto& assign_( tuple< T >& l, tuple< U > const& r, std::integer_sequence< int, NN... > ) {
+
+      char dummy[] = { ( get< NN >() = r.template get< NN >(), char{} )... };
+      (void) dummy;
+
+      return l;
+    }
+
+    //moving a different tuple
+    
+    template<typename U>
+    auto& operator= ( tuple<U>&& r ) { 
+
+      static_assert( size == U::size, "sizes of tuples do not match" );
+
+      return assign_( *this, std::move( r ), std::make_integer_sequence< int, size >{} );
+    }
+
+    template<typename U, int... NN>
+    auto& assign_( tuple< T >& l, tuple< U > && r, std::integer_sequence< int, NN... > ) {
+
+      char dummy[] = { ( get< NN >() = std::move( r.template get< NN >() ), char{} )... };
+      (void) dummy;
+
+      return l;
+    }
+
+    //accessing data
+
     template<int N> constexpr auto& get() {
-      static_assert(N < T::size, "tuple::get -> out of bounds access");
+
+      static_assert( N < size, "tuple::get -> out of bounds access" );
+
       return tuple_element< T, N >::value;
     }
 
     template<typename U> constexpr auto& get() {
-      static_assert(tlist_get_n<T, U>::value != -1, "no such type in type list");
+
+      static_assert( tlist_get_n<T, U>::value != -1, "no such type in type list" );
+
       return tuple_element< T, tlist_get_n<T, U>::value >::value;
     }
 
     template<int N> constexpr auto& get() const {
-      static_assert(N < T::size, "tuple::get -> out of bounds access");
+
+      static_assert( N < T::size, "tuple::get -> out of bounds access" );
+
       return tuple_element< T, N >::value;
     }
 
     template<typename U> constexpr auto& get() const {
-      static_assert(tlist_get_n<T, U>::value != -1, "no such type in type list");
+
+      static_assert( tlist_get_n<T, U>::value != -1, "no such type in type list" );
+
       return tuple_element< T, tlist_get_n<T, U>::value >::value;
     }
 
-    using base::base;
   };
 
   //template alias to wrap types into type_list
@@ -232,7 +325,67 @@ namespace luple_ns {
 
     luple_do_impl( std::make_integer_sequence< int, T0::type_list::size >{}, t, fn );
   }
-  
+ 
+
+  //tie
+  template<typename... TT>
+  auto luple_tie( TT&&... args ) {
+    return luple< TT... >{ std::forward<TT>( args )... };
+  }
+
+  //relational operators helpers
+
+  template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
+  bool luple_cmp_less ( T&, U& ) { return false; }
+
+  template<int N, typename T, typename U, typename = std::enable_if_t< (N < T::size) >>
+  bool luple_cmp_less ( luple_t< T > const& a, luple_t< U > const& b ) {
+
+    bool less = get< N >( a ) < get< N >( b );
+    bool equal = get< N >( a ) == get< N >( b );
+
+    return less ? true : ( equal ? luple_cmp_less< N+1 >( a, b ) : false );
+  }
+
+  template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
+  bool luple_cmp_equal ( T&, U& ) { return true; }
+
+  template<int N, typename T, typename U, typename = std::enable_if_t< (N < T::size) >>
+  bool luple_cmp_equal ( luple_t< T > const& a, luple_t< U > const& b ) {
+
+    bool equal = get< N >( a ) == get< N >( b );
+
+    return equal ? luple_cmp_equal< N+1 >( a, b ) : false;
+  }
+
+  //relational operators
+
+  template<typename T, typename U, typename = std::enable_if_t< (T::size > 0) && T::size == U::size >>
+  bool operator< ( luple_t< T > const& a, luple_t< U > const& b ) {
+
+    return luple_cmp_less< 0 >( a, b );
+  }
+
+  template<typename T, typename U, typename = std::enable_if_t< (T::size > 0) && T::size == U::size >>
+  bool operator== ( luple_t< T > const& a, luple_t< U > const& b ) {
+
+    return luple_cmp_equal< 0 >( a, b );
+  }
+
+  //the rest are easy
+
+  template<typename T, typename U>
+  bool operator!= ( luple_t< T > const& a, luple_t< U > const& b ) { return !( a == b ); }
+
+  template<typename T, typename U>
+  bool operator> ( luple_t< T > const& a, luple_t< U > const& b ) { return b < a; }
+
+  template<typename T, typename U>
+  bool operator<= ( luple_t< T > const& a, luple_t< U > const& b ) { return !( a > b ); }
+
+  template<typename T, typename U>
+  bool operator>= ( luple_t< T > const& a, luple_t< U > const& b ) { return !( a < b ); }
+
 }
 
 //import into global namespace
@@ -240,60 +393,9 @@ using luple_ns::luple;
 using luple_ns::luple_t;
 using luple_ns::get;
 using luple_ns::index;
+using luple_ns::luple_tie;
+using luple_ns::luple_do;
 
-
-//relational operators helpers
-
-template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
-bool luple_cmp_less ( T&, U& ) { return false; }
-
-template<int N, typename T, typename U, typename = std::enable_if_t< (N < T::size) >>
-bool luple_cmp_less ( luple_t< T > const& a, luple_t< U > const& b ) {
-
-  bool less = get< N >( a ) < get< N >( b );
-  bool equal = get< N >( a ) == get< N >( b );
-
-  return less ? true : ( equal ? luple_cmp_less< N+1 >( a, b ) : false );
-}
-
-template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
-bool luple_cmp_equal ( T&, U& ) { return true; }
-
-template<int N, typename T, typename U, typename = std::enable_if_t< (N < T::size) >>
-bool luple_cmp_equal ( luple_t< T > const& a, luple_t< U > const& b ) {
-
-  bool equal = get< N >( a ) == get< N >( b );
-
-  return equal ? luple_cmp_equal< N+1 >( a, b ) : false;
-}
-
-//relational operators
-
-template<typename T, typename U, typename = std::enable_if_t< (T::size > 0) && T::size == U::size >>
-bool operator< ( luple_t< T > const& a, luple_t< U > const& b) {
-
-  return luple_cmp_less< 0 >( a, b );
-}
-
-template<typename T, typename U, typename = std::enable_if_t< (T::size > 0) && T::size == U::size >>
-bool operator== ( luple_t< T > const& a, luple_t< U > const& b) {
-
-  return luple_cmp_equal< 0 >( a, b );
-}
-
-//the rest are easy
-
-template<typename T, typename U>
-bool operator!= ( luple_t< T > const& a, luple_t< U > const& b) { return !( a == b ); }
-
-template<typename T, typename U>
-bool operator> ( luple_t< T > const& a, luple_t< U > const& b) { return b < a; }
-
-template<typename T, typename U>
-bool operator<= ( luple_t< T > const& a, luple_t< U > const& b) { return !( a > b ); }
-
-template<typename T, typename U>
-bool operator>= ( luple_t< T > const& a, luple_t< U > const& b) { return !( a < b ); }
 
 
 

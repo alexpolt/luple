@@ -93,9 +93,9 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   [n]: http://alexpolt.github.io/named-tuple.html "nuple: a Named Tuple"
   [i]: http://alexpolt.github.io/intern.html "Useful Properties of String Interning in C++"
 
-  [l-tio]: https://goo.gl/bGyS62 "luple Online Example at tio.run"
-  [l-col]: http://coliru.stacked-crooked.com/a/d6d74d417d22ea75 "luple Online Example at Coliru"
-  [l-wan]: https://wandbox.org/permlink/eJWvtGKE5SwmIpZV "luple Online Example at Wandbox"
+  [l-tio]: https://goo.gl/pdvYee "luple Online Example at tio.run"
+  [l-col]: http://coliru.stacked-crooked.com/a/f40d4c6f63cdf166 "luple Online Example at Coliru"
+  [l-wan]: https://wandbox.org/permlink/Awss0a3gxcaFKN8i "luple Online Example at Wandbox"
 
   [n-tio]: https://goo.gl/zvo26z "nuple Online Example at tio.run"
   [n-col]: http://coliru.stacked-crooked.com/a/52984bf7d0b4db19 "nuple Online Example at Coliru"

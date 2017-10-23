@@ -21,6 +21,8 @@ Description:
 
   To use this extension: #define N3599
 
+  Update: N3599 is now enabled by default, waiting for MSVC to implement it
+
 Dependencies: 
 
 Usage:
@@ -53,6 +55,12 @@ Usage:
 
 */
 
+
+//Use N3599 proposal by default on GCC and Clang
+
+#define N3599
+
+
 namespace intern {
 
   template<char... NN> struct string {
@@ -79,7 +87,6 @@ namespace intern {
 
 }
 
-//define N3599 on GCC or Clang to use an extension (no limit on strings and no excessive chars)
 
 #if !defined( _MSC_VER ) && defined( N3599 )
 

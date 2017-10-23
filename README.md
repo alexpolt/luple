@@ -97,9 +97,9 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   [l-col]: http://coliru.stacked-crooked.com/a/cfa21b5a4354a6d8 "luple Online Example at Coliru"
   [l-wan]: https://wandbox.org/permlink/yZWjO0fnaH31DZP5 "luple Online Example at Wandbox"
 
-  [n-tio]: https://goo.gl/YqdLMw "nuple Online Example at tio.run"
-  [n-col]: http://coliru.stacked-crooked.com/a/51be932fd34f6e45 "nuple Online Example at Coliru"
-  [n-wan]: https://wandbox.org/permlink/nqAv7ZoSBiLPWJqr "nuple Online Example at Wandbox"
+  [n-tio]: https://goo.gl/zvo26z "nuple Online Example at tio.run"
+  [n-col]: http://coliru.stacked-crooked.com/a/52984bf7d0b4db19 "nuple Online Example at Coliru"
+  [n-wan]: https://wandbox.org/permlink/ghbTSf5LwztoyCta "nuple Online Example at Wandbox"
 
   [j-tio]: https://goo.gl/c8ofW5 "nuple Online Example at tio.run"
   [j-col]: http://coliru.stacked-crooked.com/a/8f2f84adae0cb751 "nuple Online Example at Coliru"

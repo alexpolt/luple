@@ -416,7 +416,19 @@ namespace luple_ns {
   template<typename T, typename U>
   bool operator >= ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a < b ); }
 
+
+  //swap
+
+  template<typename T>
+  void swap( luple_t<T> & l, luple_t<T> & r ) {
+
+    auto tmp = std::move( l );
+    l = std::move( r );
+    r = std::move( tmp );
+  }
+
 }
+
 
 //import into global namespace
 

@@ -46,9 +46,9 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   There is a limit on string length of 10 characters (sort of arbitrary), you can increase it by 
   editing the $(...) macro in the intern.h header. Or #define N3599 to use [N3599][]
   proposal (adds string literal template to the language) which GCC and Clang implement as an 
-  extension, hopefully MSVC will support it too.
+  extension, hopefully MSVC will support it too (Update: N3599 enabled by default).
 
-  Also you can check an online example [here at tio.run][i-tio] (or at [Ideone][i-ide]).
+  Also you can check an online example [here at tio.run][i-tio] (or at [Ideone][i-col]).
 
   Read the header for API documentation.
 
@@ -93,20 +93,20 @@ C++ Type Loophole, luple, nuple, C++ String Interning, Struct Reader.
   [n]: http://alexpolt.github.io/named-tuple.html "nuple: a Named Tuple"
   [i]: http://alexpolt.github.io/intern.html "Useful Properties of String Interning in C++"
 
-  [l-tio]: https://goo.gl/isZtwj "luple Online Example at tio.run"
-  [l-col]: http://coliru.stacked-crooked.com/a/15a37a8385bcb3dc "luple Online Example at Coliru"
-  [l-wan]: https://wandbox.org/permlink/nm2pzbt1WqkfZ6k1 "luple Online Example at Wandbox"
+  [l-tio]: https://goo.gl/AoZoFn "luple Online Example at tio.run"
+  [l-col]: http://coliru.stacked-crooked.com/a/cfa21b5a4354a6d8 "luple Online Example at Coliru"
+  [l-wan]: https://wandbox.org/permlink/yZWjO0fnaH31DZP5 "luple Online Example at Wandbox"
 
-  [n-tio]: https://goo.gl/ocpLpG "luple Online Example at tio.run"
-  [n-col]: http://coliru.stacked-crooked.com/a/6c31a74287925b52 "luple Online Example at Coliru"
-  [n-wan]: https://wandbox.org/permlink/FA7LV8zjuyy9UIFH "luple Online Example at Wandbox"
+  [n-tio]: https://goo.gl/YqdLMw "nuple Online Example at tio.run"
+  [n-col]: http://coliru.stacked-crooked.com/a/51be932fd34f6e45 "nuple Online Example at Coliru"
+  [n-wan]: https://wandbox.org/permlink/nqAv7ZoSBiLPWJqr "nuple Online Example at Wandbox"
 
-  [j-tio]: https://goo.gl/c8ofW5 "luple Online Example at tio.run"
-  [j-col]: http://coliru.stacked-crooked.com/a/8f2f84adae0cb751 "luple Online Example at Coliru"
-  [j-wan]: https://wandbox.org/permlink/NBHrlq8UJ9kDf0KS "luple Online Example at Wandbox"
+  [j-tio]: https://goo.gl/c8ofW5 "nuple Online Example at tio.run"
+  [j-col]: http://coliru.stacked-crooked.com/a/8f2f84adae0cb751 "nuple Online Example at Coliru"
+  [j-wan]: https://wandbox.org/permlink/NBHrlq8UJ9kDf0KS "nuple Online Example at Wandbox"
 
-  [i-tio]: https://goo.gl/LfDTZ3 "C++ String Interning Online Example"
-  [i-ide]: https://ideone.com/Dh6az7 "C++ String Interning Online Example"
+  [i-tio]: https://goo.gl/sBtBKn "C++ String Interning Online Example at tio.run"
+  [i-col]: http://coliru.stacked-crooked.com/a/ad43084765b89d9c "C++ String Interning Online Example at Coliru"
 
 
   [luple.h]: https://github.com/alexpolt/luple/blob/master/luple.h

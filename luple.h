@@ -329,7 +329,7 @@ namespace luple_ns {
 
   //helper to run code for every member of luple
   template<int... N, typename T0, typename T1>
-  void luple_do_impl ( std::integer_sequence<int, N...>, T0 & t, T1 fn ) {
+  constexpr void luple_do_impl ( std::integer_sequence<int, N...>, T0 & t, T1 fn ) {
 
     //in C++17 we got folding expressions
 
@@ -340,7 +340,7 @@ namespace luple_ns {
 
   //helper to run code for every member of luple
   template<typename T0, typename T1>
-  void luple_do ( T0 & t, T1 fn ) {
+  constexpr void luple_do ( T0 & t, T1 fn ) {
 
     luple_do_impl( std::make_integer_sequence< int, T0::type_list::size >{}, t, fn );
   }
@@ -349,15 +349,16 @@ namespace luple_ns {
   //tie
 
   template<typename... TT>
-  auto luple_tie ( TT &&... args ) {
-    return luple< TT... >{ std::forward<TT>( args )... };
+  constexpr auto luple_tie ( TT &... args ) {
+
+    return luple< TT &... >{ args... };
   }
 
 
   //as_luple( value0, value1 ... ) -> luple< decltype(value0), decltype(value1) ... >
 
   template<typename... TT>
-  auto as_luple( TT... args ) {
+  constexpr auto as_luple( TT... args ) {
 
     return luple< TT... >{ std::move( args )... };    
   }
@@ -366,10 +367,10 @@ namespace luple_ns {
   //relational operators helpers
 
   template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
-  bool luple_cmp_less ( T&, U& ) { return false; }
+  constexpr bool luple_cmp_less ( T &, U & ) { return false; }
 
   template<int N, typename T, typename U, typename = std::enable_if_t< (N < T::size) >>
-  bool luple_cmp_less ( luple_t< T > const& a, luple_t< U > const& b ) {
+  constexpr bool luple_cmp_less ( luple_t< T > const & a, luple_t< U > const & b ) {
 
     bool less = get<N>( a ) < get<N>( b );
     bool equal = get<N>( a ) == get<N>( b );
@@ -378,10 +379,10 @@ namespace luple_ns {
   }
 
   template<int N, typename T, typename U, typename = std::enable_if_t< N == T::size >>
-  bool luple_cmp_equal ( T &, U & ) { return true; }
+  constexpr bool luple_cmp_equal ( T &, U & ) { return true; }
 
   template<int N, typename T, typename U, typename = std::enable_if_t< ( N < T::size ) >>
-  bool luple_cmp_equal ( luple_t<T> const& a, luple_t<U> const& b ) {
+  constexpr bool luple_cmp_equal ( luple_t<T> const & a, luple_t<U> const & b ) {
 
     bool equal = get<N>( a ) == get<N>( b );
 
@@ -391,13 +392,13 @@ namespace luple_ns {
   //relational operators
 
   template<typename T, typename U, typename = std::enable_if_t< ( T::size > 0 ) && T::size == U::size >>
-  bool operator < ( luple_t<T> const & a, luple_t<U> const & b ) {
+  constexpr bool operator < ( luple_t<T> const & a, luple_t<U> const & b ) {
 
     return luple_cmp_less<0>( a, b );
   }
 
   template<typename T, typename U, typename = std::enable_if_t< ( T::size > 0 ) && T::size == U::size >>
-  bool operator == ( luple_t<T> const & a, luple_t<U> const & b ) {
+  constexpr bool operator == ( luple_t<T> const & a, luple_t<U> const & b ) {
 
     return luple_cmp_equal<0>( a, b );
   }
@@ -405,16 +406,16 @@ namespace luple_ns {
   //the rest are easy
 
   template<typename T, typename U>
-  bool operator != ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a == b ); }
+  constexpr bool operator != ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a == b ); }
 
   template<typename T, typename U>
-  bool operator > ( luple_t<T> const & a, luple_t<U> const & b ) { return b < a; }
+  constexpr bool operator > ( luple_t<T> const & a, luple_t<U> const & b ) { return b < a; }
 
   template<typename T, typename U>
-  bool operator <= ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a > b ); }
+  constexpr bool operator <= ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a > b ); }
 
   template<typename T, typename U>
-  bool operator >= ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a < b ); }
+  constexpr bool operator >= ( luple_t<T> const & a, luple_t<U> const & b ) { return !( a < b ); }
 
 
   //swap
@@ -439,5 +440,25 @@ using luple_ns::index;
 using luple_ns::luple_tie;
 using luple_ns::luple_do;
 using luple_ns::as_luple;
+
+
+/*
+
+  //C++17 structured binding support
+
+  #include <tuple>
+
+  template<typename T> class std::tuple_size< luple_t<T> > {
+    public:
+    static const int value = T::size;
+  };
+
+  template<std::size_t N, typename T> class std::tuple_element< N, luple_t<T> > {
+    public:  
+    using type = luple_ns::tlist_get_t< T, N >;
+  };
+
+*/
+
 
 

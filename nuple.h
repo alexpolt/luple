@@ -193,4 +193,3 @@ namespace nuple_ns {
 using nuple_ns::nuple;
 using nuple_ns::as_nuple;
 
-

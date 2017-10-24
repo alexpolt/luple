@@ -191,5 +191,7 @@ namespace nuple_ns {
 //import into global namespace
 
 using nuple_ns::nuple;
+using nuple_ns::get;
 using nuple_ns::as_nuple;
+
 

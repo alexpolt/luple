@@ -107,45 +107,12 @@ Usage:
       return as_luple( std::string{ "alex"}, id );
     }
 
-  conversion to std::tuple:
-
-    auto t = get_person( 3 ).as_tuple();
-
-  conversion to std::pair:
-
-    auto t = get_person( 3 ).as_pair();
-    
-    std::cout << t.first << t.second;
-
-  structured binding:
-
-    auto[ str, id ] = get_person( 4 );
-
 
 */
 
 
 #include <utility>
 #include <type_traits>
-
-
-namespace std {
-
-  //forward declare std::tuple classes to add conversion and structured binding support
-
-  template<typename...>
-  class tuple;
-
-  template<typename>
-  class tuple_size;
-
-  template<std::size_t, typename>
-  class tuple_element;
-
-  template<typename, typename> 
-  struct pair;
-
-}
 
 
 namespace luple_ns {
@@ -157,6 +124,7 @@ namespace luple_ns {
     static const int size = sizeof...(TT); 
 
     template<typename... UU> struct add {
+      
       using type = type_list< TT..., UU... >;
     };
 
@@ -167,7 +135,9 @@ namespace luple_ns {
   template<typename T, int N, int M = 0> struct tlist_get;
 
   template<int N, int M, typename T, typename... TT> struct tlist_get< type_list<T, TT...>, N, M > {
+
     static_assert(N < (int) sizeof...(TT)+1 + M, "type index out of bounds");
+
     using type = std::conditional_t< N == M, T, typename tlist_get< type_list<TT...>, N, M + 1 >::type >;
   };
 
@@ -183,10 +153,12 @@ namespace luple_ns {
   template<typename T, typename U, int N = 0> struct tlist_get_n;
 
   template<typename U, int N, typename T, typename... TT> struct tlist_get_n< type_list<T, TT...>, U, N > {
+
     static const int value = std::is_same< T, U >::value ? N : tlist_get_n< type_list<TT...>, U, N + 1 >::value;
   };
 
   template<typename U, int N> struct tlist_get_n< type_list<>, U, N > {
+
     static const int value = -1;
   };
 
@@ -199,16 +171,19 @@ namespace luple_ns {
 
   template<typename T, typename... TT> 
   struct has_reference< T &, TT... > { 
+    
     static const bool value = true;
   };
 
   template<typename T, typename... TT> 
   struct has_reference< T &&, TT... > { 
+
     static const bool value = true;
   };
 
   template<> 
   struct has_reference<> {
+
     static const bool value = false;
   };
 
@@ -261,44 +236,6 @@ namespace luple_ns {
       
       static_assert( ! has_reference<TT...>::value, "a converting constructor can't be used with reference template parameters" );
     }
-
-    //conversion into std::tuple
-    constexpr auto as_tuple () & {
-
-      return std::tuple<TT...>{ luple_element< tlist, NN >::_value... };
-    };
-
-    constexpr auto as_tuple () && {
-
-      return std::tuple<TT...>{ std::forward<TT>( luple_element< tlist, NN >::_value )... };
-    };
-    
-    //conversion into std::pair
-    constexpr auto as_pair () & {
-
-      static_assert( tlist::size > 1, "std::pair requires at least two type parameters" );
-
-      using first_t = tlist_get_t< tlist, 0 >;
-      using second_t = tlist_get_t< tlist, 1 >;
-
-      return std::pair< first_t, second_t >{ 
-        luple_element< tlist, 0 >::_value,
-        luple_element< tlist, 1 >::_value
-      };
-    };
-
-    constexpr auto as_pair () && {
-
-      static_assert( tlist::size > 1, "std::pair requires at least two type parameters" );
-
-      using first_t = tlist_get_t< tlist, 0 >;
-      using second_t = tlist_get_t< tlist, 1 >;
-
-      return std::pair< first_t, second_t >{ 
-        std::forward<first_t>( luple_element< tlist, 0 >::_value ),
-        std::forward<second_t>( luple_element< tlist, 1 >::_value )
-      };
-    };
 
   };
 
@@ -556,18 +493,5 @@ using luple_ns::index;
 using luple_ns::luple_tie;
 using luple_ns::luple_do;
 using luple_ns::as_luple;
-
-
-//C++17 structured binding support
-
-template<typename T> class std::tuple_size< luple_t<T> > {
-  public:
-  static const int value = T::size;
-};
-
-template<std::size_t N, typename T> class std::tuple_element< N, luple_t<T> > {
-  public:  
-  using type = luple_ns::tlist_get_t< T, N >;
-};
 
 

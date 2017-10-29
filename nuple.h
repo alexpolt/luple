@@ -176,7 +176,8 @@ namespace nuple_ns {
     return nuple< TT... >{ std::move( get<NN*2+1>( l ) )... };
   }
   
-  //as_nuple( $name("..."), value, ... ) -> nuple< $name(...), decltype(value), ... >
+  //as_nuple( $name("..."), value, ... ) -> nuple< $(...), decltype( value ), ... >
+  //note the difference between $name(..) and $(...)
 
   template<typename... TT>
   auto as_nuple( TT... args ) {

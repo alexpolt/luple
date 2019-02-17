@@ -110,6 +110,8 @@ Usage:
 
 */
 
+#ifndef LUPLE_LUPLE_H
+#define LUPLE_LUPLE_H
 
 #include <utility>
 #include <type_traits>
@@ -494,4 +496,4 @@ using luple_ns::luple_tie;
 using luple_ns::luple_do;
 using luple_ns::as_luple;
 
-
+#endif // LUPLE_LUPLE_H

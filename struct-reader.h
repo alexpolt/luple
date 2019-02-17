@@ -110,11 +110,15 @@ namespace struct_reader {
     return ptype{};
   }
 
+  static constexpr int const tid = 0xFFFF;
+  static constexpr int const is_ptr = 1 << 16;
+  static constexpr int const is_con = 1 << 17;
+
   //read struct data member types and put it into a type list
   template<typename T, int... N>
   constexpr auto get_type_list(std::integer_sequence<int, N...>) {
     constexpr int t[] = { get_type_id<T, N...>(N)... };
-    constexpr int const tid = 0xFFFF, is_ptr = 1 << 16, is_con = 1 << 17;
+    (void)t; // maybe unused if N == 0
     return type_list< decltype(get_type<type_list_t, t[N]&tid, t[N]&is_ptr, t[N]&is_con>())...>{};
   }
 

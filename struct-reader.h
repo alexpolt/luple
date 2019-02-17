@@ -97,7 +97,7 @@ namespace struct_reader {
   template<typename T, int... N>
   constexpr auto get_type_id(int n) {
     read_type_t tid[sizeof...(N)]{};
-    T d = T{ tid[N]... }; (void)d;
+    T{ tid[N]... };
     return tid[n].data;
   }
 
